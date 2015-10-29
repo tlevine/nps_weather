@@ -1,3 +1,17 @@
 Look up the `weather <http://www.nps.gov/deva/planyourvisit/weather.htm>`_
 in United States National Park Service
 `parks <http://www.nps.gov/findapark/index.htm>`_.
+
+Install from PyPI. ::
+
+    pip3 install nps_weather
+
+Run from the command line, ::
+
+    nps-weather output-directory-goes-here
+
+or run from Python. ::
+
+    from nps_weather import nps_weather
+    for park in nps_weather():
+        print(park)
