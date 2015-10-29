@@ -11,3 +11,15 @@ def findapark(response):
 
 def weather(response):
     html = lxml.html.fromstring(response.content)
+    containers = html.xpath('id("content-main-container")')
+    if len(containers) == 1:
+        return containers[0].text_content()
+    else:
+        raise AssertionError('%d containers in %s' % (len(containers), response.url))
+
+def has_weather(response):
+    return all([
+        response,
+        'CommonSpot Error' not in response.text,
+        'Page In-Progress' not in response.text,
+    ])
