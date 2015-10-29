@@ -1,10 +1,10 @@
 from .download import get
 from . import parse
 
-WEATHER = 'http://www.nps.gov/%s/planyourvisit/weather.htm'
+WEATHER = 'http://www.nps.gov/%(id)s/planyourvisit/weather.htm'
 
 def nps_weather():
-    park_identifiers = parse.findapark(get('http://www.nps.gov/findapark/index.htm'))
-    print(list(park_identifiers))
-    for park_identifier in park_identifiers:
-        yield parse.weather(get(WEATHER % park_identifier))
+    parks = parse.findapark(get('http://www.nps.gov/findapark/index.htm'))
+    for park in parks:
+        parse.weather(get(WEATHER % park))
+        print(park)
