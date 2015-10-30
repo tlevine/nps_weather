@@ -8,5 +8,7 @@ def nps_weather():
     for park in parks:
         response = get(WEATHER % park)
         if parse.has_weather(response):
-            park['weather'] = parse.weather(response)
+            weather = parse.weather(response)
+            if weather:
+                park['weather'] = weather
         yield park

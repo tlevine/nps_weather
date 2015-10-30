@@ -1,3 +1,5 @@
+import re
+
 import lxml.html
 
 def findapark(response):
@@ -9,11 +11,13 @@ def findapark(response):
             'name': str(option.xpath('text()')[0]),
         }
 
+SEASON = re.compile(r'.*(winter|spring|summer|fall|autumn).*', flags = re.IGNORECASE)
 def weather(response):
     html = lxml.html.fromstring(response.content)
     containers = html.xpath('id("content-main-container")')
     if len(containers) == 1:
-        return containers[0].text_content()
+        lines = containers[0].text_content().split('\n')
+        return '\n\n'.join(line.strip() for line in lines if re.match(SEASON, line))
     else:
         raise AssertionError('%d containers in %s' % (len(containers), response.url))
 
