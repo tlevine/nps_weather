@@ -1,4 +1,5 @@
 import re
+from functools import reduce
 
 import lxml.html
 
@@ -20,7 +21,14 @@ def weather(response):
     html = lxml.html.fromstring(response.content)
     containers = html.xpath('id("content-main-container")')
     if len(containers) == 1:
-        lines = containers[0].text_content().split('\n')
+        def merge_small(ys, x):
+            _ys = list(ys)
+            if len(_ys[-1]) < 30:
+                _ys[-1] += x
+            else:
+                _ys.append(x)
+            return _ys
+        lines = reduce(merge_small, containers[0].text_content().split('\n'), [''])
         return '\n\n'.join(line.strip() for line in lines if re.match(SEASON, line))
     else:
         raise AssertionError('%d containers in %s' % (len(containers), response.url))
