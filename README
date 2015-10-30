@@ -8,7 +8,7 @@ Install from PyPI. ::
 
 Run from the command line, ::
 
-    nps-weather output-directory-goes-here
+    nps-weather > index.html
 
 or run from Python. ::
 
