@@ -1,19 +1,35 @@
+import sys
 import os
 import argparse
 
 from .main import nps_weather
 
-def directory(x):
+def file(x):
     os.makedirs(x, exist_ok = True)
     return x
 
 a = argparse.ArgumentParser('Download NPS weather information')
-a.add_argument('output-directory', type = directory)
+a.add_argument('--output', '-o', type = argparse.FileType('w'),
+               default = sys.stdout)
+
+HEADER = '''Weather in United States National Parks
+========================================
+These are typical weather conditions for different United States national
+parks, each taken from the park's particular weather webpage. I used the
+`nps_weather package <https://pypi.python.org/pypi/nps_weather>`_
+to generate this file.
+
+'''
+
+PARK_TEMPLATE = '''[%(name)s](%(url)s)
+----------------------------------------
+%(weather)s
+
+'''
 
 def cli():
-    output_directory = getattr(a.parse_args(), 'output-directory')
+    fp = a.parse_args().output
+    fp.write(HEADER)
     for park in nps_weather():
         if 'weather' in park:
-            fn = os.path.join(output_directory, park['id'] + '.txt')
-            with open(fn, 'w') as fp:
-                fp.write(park['name'] + '\n=====\n\n' + park['weather'])
+            fp.write(park['name'] + '\n=====\n\n' + park['weather'])

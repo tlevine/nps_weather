@@ -2,13 +2,17 @@ import re
 
 import lxml.html
 
+WEATHER = 'http://www.nps.gov/%(id)s/planyourvisit/weather.htm'
+
 def findapark(response):
     html = lxml.html.fromstring(response.content)
     options = html.xpath('//select[@name="alphacode"]/optgroup/option')
     for option in options:
+        park_id = str(option.xpath('@value')[0])
         yield {
-            'id': str(option.xpath('@value')[0]),
+            'id': park_id,
             'name': str(option.xpath('text()')[0]),
+            'url': WEATHER % park_id,
         }
 
 SEASON = re.compile(r'.*(winter|spring|summer|fall|autumn).*', flags = re.IGNORECASE)
