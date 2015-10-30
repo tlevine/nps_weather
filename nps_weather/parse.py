@@ -16,7 +16,7 @@ def findapark(response):
             'url': WEATHER % park_id,
         }
 
-SEASON = re.compile(r'.*(winter|spring|summer|fall|autumn).*', flags = re.IGNORECASE)
+SEASON = re.compile(r'.*(winter|spring|summer| fall|autumn).*', flags = re.IGNORECASE)
 def weather(response):
     html = lxml.html.fromstring(response.content)
     containers = html.xpath('id("content-main-container")')

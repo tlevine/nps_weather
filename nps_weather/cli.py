@@ -21,9 +21,11 @@ to generate this file.
 
 '''
 
-PARK_TEMPLATE = '''[%(name)s](%(url)s)
+PARK_TEMPLATE = '''<a href="#%(id)s" id="%(id)s">%(name)s</a>
 ----------------------------------------
 %(weather)s
+
+[Source](%(url)s)
 
 '''
 
