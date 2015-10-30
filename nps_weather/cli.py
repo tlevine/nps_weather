@@ -32,4 +32,4 @@ def cli():
     fp.write(HEADER)
     for park in nps_weather():
         if 'weather' in park:
-            fp.write(park['name'] + '\n=====\n\n' + park['weather'])
+            fp.write(PARK_TEMPLATE % park)

@@ -2,7 +2,7 @@ import re
 
 import lxml.html
 
-WEATHER = 'http://www.nps.gov/%(id)s/planyourvisit/weather.htm'
+WEATHER = 'http://www.nps.gov/%s/planyourvisit/weather.htm'
 
 def findapark(response):
     html = lxml.html.fromstring(response.content)
