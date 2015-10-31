@@ -10,7 +10,7 @@ setup(name='nps_weather',
           'lxml>=3.3.0',
           'requests>=2.7.0',
       ],
-      version='0.0.2',
+      version='0.0.3',
       license='AGPL',
       entry_points = {'console_scripts': ['nps-weather = nps_weather.cli:cli']},
 )
