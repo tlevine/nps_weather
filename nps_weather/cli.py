@@ -30,7 +30,7 @@ PARK_TEMPLATE = '''<h2 id="%(id)s">%(name)s<a class="p" href="#%(id)s">&#182 </a
 '''
 
 def cli():
-    import sys
+    import sys, csv
 
     args = a.parse_args()
     if args.format == 'html':
@@ -41,4 +41,8 @@ def cli():
                 park['weather'] = '<p>' + park['weather'].replace('\n\n', '</p><p>') + '</p>'
                 fp.write(PARK_TEMPLATE % park)
     elif args.format == 'csv':
-        1/0
+        w = csv.DictWriter(sys.stdout, fieldnames = ['url', 'name', 'state', 'weather'])
+        w.writeheader()
+        for park in nps_weather():
+            del(park['id'])
+            w.writerow(park)
