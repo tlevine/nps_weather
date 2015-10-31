@@ -35,7 +35,9 @@ def weather(response):
 
 def state(response):
     html = lxml.html.fromstring(response.content)
-    return str(next(iter(html.xpath('//span[@class="location"]/text()'))))
+    texts = set(html.xpath('//span[@class="location"]/text()'))
+    if len(texts) == 1:
+        return str(next(iter(texts)))
 
 def has_weather(response):
     return all([

@@ -9,8 +9,6 @@ def file(x):
     return x
 
 a = argparse.ArgumentParser('Download NPS weather information')
-a.add_argument('--output', '-o', type = argparse.FileType('w'),
-               default = sys.stdout)
 
 HEADER = '''
 <style>a.p { margin-left: 0.5em; background-color: grey; }</style>
@@ -29,7 +27,8 @@ PARK_TEMPLATE = '''<h2 id="%(id)s">%(name)s<a class="p" href="#%(id)s">&#182 </a
 '''
 
 def cli():
-    fp = a.parse_args().output
+    import sys
+    fp = sys.stdout
     fp.write(HEADER)
     for park in nps_weather():
         if 'weather' in park:
