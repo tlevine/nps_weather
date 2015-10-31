@@ -33,6 +33,10 @@ def weather(response):
     else:
         raise AssertionError('%d containers in %s' % (len(containers), response.url))
 
+def state(response):
+    html = lxml.html.fromstring(response.content)
+    return str(next(iter(html.xpath('//span[@class="location"]/text()'))))
+
 def has_weather(response):
     return all([
         response,

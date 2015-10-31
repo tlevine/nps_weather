@@ -5,6 +5,7 @@ def nps_weather():
     parks = parse.findapark(get('http://www.nps.gov/findapark/index.htm'))
     for park in parks:
         response = get(park['url'])
+        park['state'] = parse.state(response)
         if parse.has_weather(response):
             weather = parse.weather(response)
             if weather:
